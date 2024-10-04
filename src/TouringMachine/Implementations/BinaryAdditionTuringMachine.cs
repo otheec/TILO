@@ -53,5 +53,7 @@ public class BinaryAdditionTuringMachine
 
         Console.WriteLine("Final tape state:");
         Console.WriteLine(tape.ToString());
+
+        Console.WriteLine(tape.Counter);
     }
 }

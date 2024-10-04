@@ -21,6 +21,8 @@ class TuringMachine(Tape tape, List<TransitionRule> transitions, List<State> end
 
             ExecuteTransition(transition);
 
+            Tape.Counter++;
+
             Tape.PrintTape();
         }
     }
@@ -78,6 +80,8 @@ class Tape(string input)
 {
     private List<string> Symbols = new(input.ToCharArray().Select(c => c.ToString()));
     private int Head = 1;
+
+    public int Counter = 0;
 
     public string Read()
     {
