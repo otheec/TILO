@@ -29,7 +29,7 @@ public class BinaryAdditionTuringMachine
         // Move left until the first `1` is found
         new TransitionRule { State = State.FIND_ONE, Read = "0", Move = 'L', NextState = State.FIND_ONE },
         new TransitionRule { State = State.FIND_ONE, Read = "1", Write = '0', Move = 'R', NextState = State.CHANGE_ZERO_TO_ONE },
-        new TransitionRule { State = State.FIND_ONE, Read = "+", Move = 'R' /*place holder*/, NextState = State.HALT },
+        new TransitionRule { State = State.FIND_ONE, Read = "+", Move = 'R' /* <-- place holder */, NextState = State.HALT },
         // Move one step to the right and change `0` to `1` if applicable
         new TransitionRule { State = State.CHANGE_ZERO_TO_ONE, Read = "0", Write = '1', Move = 'R', NextState = State.CHANGE_ZERO_TO_ONE },
         new TransitionRule { State = State.CHANGE_ZERO_TO_ONE, Read = "_", Move = 'L', NextState = State.FIND_PLUS_TO_LEFT },

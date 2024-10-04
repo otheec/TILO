@@ -21,8 +21,6 @@ class TuringMachine(Tape tape, List<TransitionRule> transitions, List<State> end
 
             ExecuteTransition(transition);
 
-            Tape.Counter++;
-
             Tape.PrintTape();
         }
     }
@@ -53,6 +51,8 @@ class TuringMachine(Tape tape, List<TransitionRule> transitions, List<State> end
 
         if (transition.Move == 'R') Tape.MoveRight();
         else if (transition.Move == 'L') Tape.MoveLeft();
+
+        Tape.Counter++;
     }
 }
 
