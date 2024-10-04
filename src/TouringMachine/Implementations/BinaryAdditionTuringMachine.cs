@@ -29,7 +29,7 @@ public class BinaryAdditionTuringMachine
         // Move left until the first `1` is found
         new TransitionRule { State = State.FIND_ONE, Read = "0", Move = 'L', NextState = State.FIND_ONE },
         new TransitionRule { State = State.FIND_ONE, Read = "1", Write = '0', Move = 'R', NextState = State.CHANGE_ZERO_TO_ONE },
-        new TransitionRule { State = State.FIND_ONE, Read = "+", Move = 'R' /* <-- place holder */, NextState = State.HALT },
+        new TransitionRule { State = State.FIND_ONE, Read = "+", Move = 'R' , NextState = State.CLEAR_TAPE_TRAVERSE },
         // Move one step to the right and change `0` to `1` if applicable
         new TransitionRule { State = State.CHANGE_ZERO_TO_ONE, Read = "0", Write = '1', Move = 'R', NextState = State.CHANGE_ZERO_TO_ONE },
         new TransitionRule { State = State.CHANGE_ZERO_TO_ONE, Read = "_", Move = 'L', NextState = State.FIND_PLUS_TO_LEFT },
@@ -44,7 +44,14 @@ public class BinaryAdditionTuringMachine
         new TransitionRule { State = State.INCREMENT,  Read = "0", Write = '1', Move = 'R', NextState = State.START },
         new TransitionRule { State = State.INCREMENT,  Read = "1", Write = '0', Move = 'L', NextState = State.INCREMENT },
         // If the machine reaches the leftmost blank, add an additional `1`
-        new TransitionRule { State = State.INCREMENT,  Read = "_", Write = '1', Move = 'R', NextState = State.START }
+        new TransitionRule { State = State.INCREMENT,  Read = "_", Write = '1', Move = 'R', NextState = State.START },
+
+        // #### CLEAR TAPE ####
+        new TransitionRule { State = State.CLEAR_TAPE_TRAVERSE, Read = "0", Move = 'R', NextState = State.CLEAR_TAPE_TRAVERSE },
+        new TransitionRule { State = State.CLEAR_TAPE_TRAVERSE, Read = "_", Move = 'L', NextState = State.CLEAR_TAPE },
+
+        new TransitionRule { State = State.CLEAR_TAPE, Read = "0", Write = '_', Move = 'L', NextState = State.CLEAR_TAPE },
+        new TransitionRule { State = State.CLEAR_TAPE, Read = "+", Write = '_', NextState = State.HALT },
         ];
 
         TuringMachine tm = new(tape, transitions, endStates: [State.HALT]);

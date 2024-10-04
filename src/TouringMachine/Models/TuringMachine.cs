@@ -61,7 +61,7 @@ class TransitionRule
     public State State { get; init; }
     public string? Read { get; init; }
     public char? Write { get; init; }
-    public required char Move { get; init; }
+    public char? Move { get; init; }
     public State NextState { get; init; }
 }
 
@@ -73,6 +73,8 @@ enum State
     CHANGE_ZERO_TO_ONE,
     FIND_PLUS_TO_LEFT,
     INCREMENT,
+    CLEAR_TAPE,
+    CLEAR_TAPE_TRAVERSE,
     HALT
 }
 
