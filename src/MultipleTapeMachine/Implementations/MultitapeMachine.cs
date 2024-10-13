@@ -7,9 +7,9 @@ public class MultitapeMachine
     public static void Run()
     {
 
-        string input = "*_" + "aabccaabcddacbad" + "______*";
+        string input = "__" + "aabccaabcddacbad" + "_______";
         Tape tape = new(input);
-        Tape tape2 = new("*_______________________*");
+        Tape tape2 = new("_________________________");
 
         List<TransitionRule> transitions = [
         new TransitionRule { State = State.START, RWM = [
@@ -132,219 +132,193 @@ public class MultitapeMachine
             new ReadWriteMove { Read = "_", Write = null, Move = null } ],
             NextState = State.PREVODA },
         new TransitionRule { State = State.PREVODA, RWM = [
-            new ReadWriteMove { Read = "_", Write = null, Move = null },
+            new ReadWriteMove { Read = "_", Write = '0', Move = null },
             new ReadWriteMove { Read = "_", Write = null, Move = 'L' } ],
-            NextState = State.COUNT_LETTERS },
+            NextState = State.INCREMENT },
 
-        new TransitionRule { State = State.COUNT_LETTERS, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "a", Write = '_', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_1 },
-        new TransitionRule { State = State.COUNT_LETTERS, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "b", Write = '_', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_1 },
-        new TransitionRule { State = State.COUNT_LETTERS, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "c", Write = '_', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_1 },
-        new TransitionRule { State = State.COUNT_LETTERS, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "d", Write = '_', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_1 },
+        new TransitionRule { State = State.INCREMENT, RWM = [
+            new ReadWriteMove { Read = "0", Write = '1', Move = 'R' },
+            new ReadWriteMove { Read = "a", Write = null, Move = 'L' } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.INCREMENT, RWM = [
+            new ReadWriteMove { Read = "1", Write = '0', Move = 'L' },
+            new ReadWriteMove { Read = "a", Write = null, Move =  null} ],
+            NextState = State.INCREMENT },
+        new TransitionRule { State = State.INCREMENT, RWM = [
+            new ReadWriteMove { Read = "_", Write = '1', Move = 'R' },
+            new ReadWriteMove { Read = "a", Write = null, Move =  'L'} ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
 
-        new TransitionRule { State = State.COUNT_LETTERS_1, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = null, Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_2 },
-
-        new TransitionRule { State = State.COUNT_LETTERS_2, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = '1', Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_3 },
-
-
-        new TransitionRule { State = State.COUNT_LETTERS_3, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = null, Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_3 },
-        new TransitionRule { State = State.COUNT_LETTERS_3, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "a", Write = '_', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_4 },
-        new TransitionRule { State = State.COUNT_LETTERS_3, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "b", Write = '_', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_4 },
-        new TransitionRule { State = State.COUNT_LETTERS_3, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "c", Write = '_', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_4 },
-        new TransitionRule { State = State.COUNT_LETTERS_3, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "d", Write = '_', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_4 },
-
-
-        new TransitionRule { State = State.COUNT_LETTERS_4, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = null, Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_4 },
-        new TransitionRule { State = State.COUNT_LETTERS_4, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "1", Write = null, Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_5 },
-
-        new TransitionRule { State = State.COUNT_LETTERS_5, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "1", Write = null, Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_5 },
-        new TransitionRule { State = State.COUNT_LETTERS_5, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = '0', Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_6 },
-        new TransitionRule { State = State.COUNT_LETTERS_5, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "0", Write = null, Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_9 },
-
-        new TransitionRule { State = State.COUNT_LETTERS_6, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "1", Write = '0', Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_6 },
-        new TransitionRule { State = State.COUNT_LETTERS_6, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = null, Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_7 },
-
-        new TransitionRule { State = State.COUNT_LETTERS_7, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "0", Write = '1', Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_8 },
-
-        new TransitionRule { State = State.COUNT_LETTERS_8, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = null, Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_3 },
-
-        new TransitionRule { State = State.COUNT_LETTERS_9, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "0", Write = null, Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_9 },
-        new TransitionRule { State = State.COUNT_LETTERS_9, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "1", Write = null, Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_9 },
-        new TransitionRule { State = State.COUNT_LETTERS_9, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = null, Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_10 },
-
-        new TransitionRule { State = State.COUNT_LETTERS_10, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "1", Write = null, Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_10 },
-        new TransitionRule { State = State.COUNT_LETTERS_10, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "0", Write = '1', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_11 },
-
-        new TransitionRule { State = State.COUNT_LETTERS_11, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "1", Write = '0', Move = 'R' } ],
-            NextState = State.COUNT_LETTERS_11 },
-        new TransitionRule { State = State.COUNT_LETTERS_11, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = null, Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_12 },
-
-        new TransitionRule { State = State.COUNT_LETTERS_12, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "0", Write = null, Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_12 },
-        new TransitionRule { State = State.COUNT_LETTERS_12, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "1", Write = null, Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_12 },
-        new TransitionRule { State = State.COUNT_LETTERS_12, RWM = [
-                new ReadWriteMove { Read = "_", Write = null, Move = null },
-                new ReadWriteMove { Read = "_", Write = null, Move = 'L' } ],
-            NextState = State.COUNT_LETTERS_3 },
-        
-        
-        
-
-        /*new TransitionRule { State = State.COUNT_LETTERS, RWM = [
-            new ReadWriteMove { Read = "a", Write = null, Move = 'L' },
-            new ReadWriteMove { Read = "_", Write = '1', } ],
-            NextState = State.COUNT_LETTERS },
-        new TransitionRule { State = State.COUNT_LETTERS, RWM = [
-            new ReadWriteMove { Read = "b", Write = null, Move = 'L' },
-            new ReadWriteMove { Read = "_", Write = null, } ],
-            NextState = State.COUNT_LETTERS },
-        new TransitionRule { State = State.COUNT_LETTERS, RWM = [
-            new ReadWriteMove { Read = "c", Write = null, Move = 'L' },
-            new ReadWriteMove { Read = "_", Write = null, } ],
-            NextState = State.COUNT_LETTERS },
-        new TransitionRule { State = State.COUNT_LETTERS, RWM = [
-            new ReadWriteMove { Read = "d", Write = null, Move = 'L' },
-            new ReadWriteMove { Read = "_", Write = null, } ],
-            NextState = State.COUNT_LETTERS },
-        new TransitionRule { State = State.COUNT_LETTERS, RWM = [
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "0", Write = null, Move = 'R' },
+            new ReadWriteMove { Read = "a", Write = null, Move = null } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "1", Write = null, Move = 'R' },
+            new ReadWriteMove { Read = "a", Write = null, Move = null } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
             new ReadWriteMove { Read = "_", Write = null, Move = 'L' },
-            new ReadWriteMove { Read = "_", Write = null, } ],
+            new ReadWriteMove { Read = "a", Write = null, Move = null } ],
             NextState = State.INCREMENT },
 
         new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "0", Write = '1', },
-            new ReadWriteMove { Read = "a", Write = null, }],
-            NextState = State.COUNT_LETTERS },
+            new ReadWriteMove { Read = "0", Write = '1', Move = 'R' },
+            new ReadWriteMove { Read = "b", Write = null, Move = 'L' } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
         new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "0", Write = '1', },
-            new ReadWriteMove { Read = "b", Write = null, } ],
-            NextState = State.COUNT_LETTERS },
+            new ReadWriteMove { Read = "1", Write = '0', Move = 'L' },
+            new ReadWriteMove { Read = "b", Write = null, Move =  null} ],
+            NextState = State.INCREMENT },
         new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "0", Write = '1', },
-            new ReadWriteMove { Read = "c", Write = null, } ],
-            NextState = State.COUNT_LETTERS },
-        new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "0", Write = '1', },
-            new ReadWriteMove { Read = "d", Write = null, } ],
-            NextState = State.COUNT_LETTERS },
+            new ReadWriteMove { Read = "_", Write = '1', Move = 'R' },
+            new ReadWriteMove { Read = "b", Write = null, Move =  'L'} ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
 
-        new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "1", Write = '0', Move = 'L'},
-            new ReadWriteMove { Read = "a", Write = null, }],
-            NextState = State.INCREMENT },
-        new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "1", Write = '0', Move = 'L'},
-            new ReadWriteMove { Read = "b", Write = null, }],
-            NextState = State.INCREMENT },
-        new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "1", Write = '0', Move = 'L'},
-            new ReadWriteMove { Read = "c", Write = null, }, ],
-            NextState = State.INCREMENT },
-        new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "1", Write = '0', Move = 'L'},
-            new ReadWriteMove { Read = "d", Write = null, },],
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "0", Write = null, Move = 'R' },
+            new ReadWriteMove { Read = "b", Write = null, Move = null } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "1", Write = null, Move = 'R' },
+            new ReadWriteMove { Read = "b", Write = null, Move = null } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "_", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "b", Write = null, Move = null } ],
             NextState = State.INCREMENT },
 
         new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "1", Write = '0', },
-            new ReadWriteMove { Read = "a", Write = null, } ],
-            NextState = State.COUNT_LETTERS },
+            new ReadWriteMove { Read = "0", Write = '1', Move = 'R' },
+            new ReadWriteMove { Read = "c", Write = null, Move = 'L' } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
         new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "1", Write = '0', },
-            new ReadWriteMove { Read = "b", Write = null, } ],
-            NextState = State.COUNT_LETTERS },
+            new ReadWriteMove { Read = "1", Write = '0', Move = 'L' },
+            new ReadWriteMove { Read = "c", Write = null, Move =  null} ],
+            NextState = State.INCREMENT },
         new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "1", Write = '0', },
-            new ReadWriteMove { Read = "c", Write = null, }],
-            NextState = State.COUNT_LETTERS },
+            new ReadWriteMove { Read = "_", Write = '1', Move = 'R' },
+            new ReadWriteMove { Read = "c", Write = null, Move =  'L'} ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "0", Write = null, Move = 'R' },
+            new ReadWriteMove { Read = "c", Write = null, Move = null } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "1", Write = null, Move = 'R' },
+            new ReadWriteMove { Read = "c", Write = null, Move = null } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "_", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "c", Write = null, Move = null } ],
+            NextState = State.INCREMENT },
+
         new TransitionRule { State = State.INCREMENT, RWM = [
-            new ReadWriteMove { Read = "1", Write = '0', },
-            new ReadWriteMove { Read = "d", Write = null, }],
-            NextState = State.COUNT_LETTERS },*/
+            new ReadWriteMove { Read = "0", Write = '1', Move = 'R' },
+            new ReadWriteMove { Read = "d", Write = null, Move = 'L' } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.INCREMENT, RWM = [
+            new ReadWriteMove { Read = "1", Write = '0', Move = 'L' },
+            new ReadWriteMove { Read = "d", Write = null, Move =  null} ],
+            NextState = State.INCREMENT },
+        new TransitionRule { State = State.INCREMENT, RWM = [
+            new ReadWriteMove { Read = "_", Write = '1', Move = 'R' },
+            new ReadWriteMove { Read = "d", Write = null, Move =  'L'} ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "0", Write = null, Move = 'R' },
+            new ReadWriteMove { Read = "d", Write = null, Move = null } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "1", Write = null, Move = 'R' },
+            new ReadWriteMove { Read = "d", Write = null, Move = null } ],
+            NextState = State.TRANSFER_RIGHT_WHILE_COUNTING },
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "_", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "d", Write = null, Move = null } ],
+            NextState = State.INCREMENT },
+
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "0", Write = null, Move = null },
+            new ReadWriteMove { Read = "_", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+        new TransitionRule { State = State.TRANSFER_RIGHT_WHILE_COUNTING, RWM = [
+            new ReadWriteMove { Read = "1", Write = null, Move = null },
+            new ReadWriteMove { Read = "_", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "0", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "d", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "1", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "d", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "_", Write = null, Move = null },
+            new ReadWriteMove { Read = "d", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "0", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "c", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "1", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "c", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "_", Write = null, Move = null },
+            new ReadWriteMove { Read = "c", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "0", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "b", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "1", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "b", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "_", Write = null, Move = null },
+            new ReadWriteMove { Read = "b", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "0", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "a", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "1", Write = null, Move = 'L' },
+            new ReadWriteMove { Read = "a", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "_", Write = null, Move = null },
+            new ReadWriteMove { Read = "a", Write = null, Move = 'R' } ],
+            NextState = State.MOVE_RIGHT_TO_COPPY_NUMBER },
+
+        new TransitionRule { State = State.MOVE_RIGHT_TO_COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "_", Write = null, Move = 'R' },
+            new ReadWriteMove { Read = "_", Write = null, Move = 'R' } ],
+            NextState = State.COPPY_NUMBER },
+
+        new TransitionRule { State = State.COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "1", Write = '_', Move = 'R' },
+            new ReadWriteMove { Read = "_", Write = '1', Move = 'R' } ],
+            NextState = State.COPPY_NUMBER },
+        new TransitionRule { State = State.COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "0", Write = '_', Move = 'R' },
+            new ReadWriteMove { Read = "_", Write = '0', Move = 'R' } ],
+            NextState = State.COPPY_NUMBER },
+        new TransitionRule { State = State.COPPY_NUMBER, RWM = [
+            new ReadWriteMove { Read = "_", Write = '_', Move = 'R' },
+            new ReadWriteMove { Read = "_", Write = null, Move = 'R' } ],
+            NextState = State.HALT },
+
         ];
 
         TuringMachine tm = new([tape, tape2], transitions, endStates: [State.HALT]);
