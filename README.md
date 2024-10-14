@@ -1,4 +1,4 @@
-# TILO - Turing Machine Project # Example with Button Link
+# TILO - Turing Machine Project
 
 <a href="https://sites.google.com/view/7tilo-xtilo/home" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; border-radius: 4px;">Visit Website</a>
 
