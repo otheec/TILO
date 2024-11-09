@@ -1,4 +1,4 @@
-﻿namespace TouringMachineEncode.Models;
+﻿namespace TouringMachineCoding.Models;
 
 class TuringMachine(Tape tape, List<TransitionRule> transitions, List<State> endStates)
 {
@@ -73,7 +73,7 @@ enum State
     FIND_START_OF_THE_NUMER_R,
     FIND_1_R,
     DECREASE_R,
-    
+
     TRAVERSE_R,
 
     FIND_1_L,

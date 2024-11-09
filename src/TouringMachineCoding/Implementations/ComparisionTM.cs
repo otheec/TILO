@@ -1,6 +1,6 @@
-﻿using TouringMachineEncode.Models;
+﻿using TouringMachineCoding.Models;
 
-namespace TouringMachineEncode.Implementations;
+namespace TouringMachineCoding.Implementations;
 
 public class ComparisionTM
 {
@@ -60,7 +60,7 @@ public class ComparisionTM
             new TransitionRule { State = State.TRAVERSE_1,  Read = "1", Write = '0', Move = 'L', NextState = State.TRAVERSE_1 },
             new TransitionRule { State = State.TRAVERSE_1,  Read = "+", Write = '0', Move = 'L', NextState = State.TRAVERSE_1 },
             new TransitionRule { State = State.TRAVERSE_1,  Read = "_", Move = 'R', NextState = State.TRAVERSE_11 },
-             //PRESUN NA PRAVY ZACATEK PRO MAZANI NA _
+            //PRESUN NA PRAVY ZACATEK PRO MAZANI NA _
             new TransitionRule { State = State.TRAVERSE_11,  Read = "0", Write = '_', Move = 'R', NextState = State.TRAVERSE_11 },
             new TransitionRule { State = State.TRAVERSE_11,  Read = "1", Write = '_', Move = 'R', NextState = State.TRAVERSE_11 },
             new TransitionRule { State = State.TRAVERSE_11,  Read = "+", Write = '_', Move = 'R', NextState = State.TRAVERSE_11 },

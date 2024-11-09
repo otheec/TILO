@@ -1,3 +1,3 @@
-﻿using TouringMachineEncode.Implementations;
+﻿using TouringMachineCoding.Implementations;
 
 ComparisionTM.Run();
