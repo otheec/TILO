@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuringMachineProject", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultipleTapeMachine", "src\MultipleTapeMachine\MultipleTapeMachine.csproj", "{721AB72A-48CE-4E27-9F80-4EB666034979}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouringMachineCoding", "src\TouringMachineEncode\TouringMachineCoding.csproj", "{906D9A7F-BBB5-4D2C-879F-7E935AC3722D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouringMachineCoding", "src\TouringMachineCoding\TouringMachineCoding.csproj", "{9A867B49-FA17-4508-8CA4-B6F929F4E197}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{721AB72A-48CE-4E27-9F80-4EB666034979}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{721AB72A-48CE-4E27-9F80-4EB666034979}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{721AB72A-48CE-4E27-9F80-4EB666034979}.Release|Any CPU.Build.0 = Release|Any CPU
-		{906D9A7F-BBB5-4D2C-879F-7E935AC3722D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{906D9A7F-BBB5-4D2C-879F-7E935AC3722D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{906D9A7F-BBB5-4D2C-879F-7E935AC3722D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{906D9A7F-BBB5-4D2C-879F-7E935AC3722D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A867B49-FA17-4508-8CA4-B6F929F4E197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A867B49-FA17-4508-8CA4-B6F929F4E197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A867B49-FA17-4508-8CA4-B6F929F4E197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A867B49-FA17-4508-8CA4-B6F929F4E197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
