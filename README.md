@@ -31,7 +31,19 @@ TILO is a collection of Turing machine implementations designed to demonstrate v
    - Suitable for more complex algorithms that require the division of tasks across tapes.
    - Can be applied to more advanced operations such as multiplication or language recognition problems in computational theory.
 
-## How to Run
-1. Clone the repository.
-2. Ensure you have a Turing machine simulator or environment set up.
-3. Input your binary numbers and run the machine according to the project’s specifications.
+### 3. Binary Comparison Function (foo)
+
+This project implements a Turing machine that compares two binary numbers `x` and `y` and returns `1` if `x > y`, and `0` otherwise.
+
+#### Function Definition
+- **foo(x, y)**: Outputs `1` if `x > y`; otherwise, outputs `0`.
+- **Inputs**: Two binary numbers separated by `+` (e.g., `x+y`).
+- **Alphabet**: `{0, 1, +}`.
+
+#### Steps
+1. **Design the Turing Machine for Comparison**: Define the Turing machine’s states and transitions to compare two binary numbers separated by `#`.
+2. **Implement Transition Functions**: Write the specific transition rules needed to perform the comparison operation.
+3. **Enhanced Simulation Features**:
+   - **Custom Simulation**: Simulate the comparison Turing machine created in step 1.
+   - **Binary Encoding of Turing Machines**: Allow encoding of machine structure in binary format for easy interpretation by the simulator.
+   - **Binary Code Conversion**: Convert binary-coded Turing machine structures into a format usable by the simulator.
