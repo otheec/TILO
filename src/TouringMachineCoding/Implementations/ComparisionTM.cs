@@ -73,7 +73,7 @@ public class ComparisionTM
 
         TuringMachine tm = new(tape, transitions, endStates: [13]);
 
-        Encoder.Encode(transitions);
+        Console.WriteLine(Encoder.Encode(transitions));
 
         tm.Run();
 

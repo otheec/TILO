@@ -62,7 +62,7 @@ class TransitionRule
     public int State { get; init; }
     public char? Read { get; init; }
     public char? Write { get; init; }
-    public char? Move { get; init; }
+    public char Move { get; init; }
     public int NextState { get; init; }
 }
 

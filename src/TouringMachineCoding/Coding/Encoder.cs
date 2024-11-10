@@ -10,8 +10,36 @@ internal class Encoder
     {
         var symbolsMap = GetSymbolsMap(transitions);
         var statesMap = GetStatesMap(transitions);
+        var headMap = HeadMovement.GetHeadMovementMap();
 
-        throw new NotImplementedException();
+        var transLines = new List<string>();
+
+        for ( var i = 0; i < transitions.Count; i++)
+        {
+            var transition = transitions[i];
+
+            string state = statesMap[transition.State];
+            string read = symbolsMap[GetNotNullSymbol(transition.Read)];
+            string write = symbolsMap[GetNotNullSymbol(transition.Write)];
+            string move = headMap[transition.Move];
+            string nextState = statesMap[transition.NextState];
+
+            var newLine = state + read + nextState + write + move;
+            transLines.Add(newLine);
+        }
+
+        return string.Join("", transLines);
+    }
+
+    private static char GetNotNullSymbol(char? symbol)
+    {
+        if (symbol == null)
+        {
+            return _nullChar;
+        } else
+        {
+            return (char)symbol;
+        }
     }
 
     private static Dictionary<int, string> GetStatesMap(List<TransitionRule> transitions)
@@ -21,15 +49,24 @@ internal class Encoder
             .Distinct()
             .ToList();
 
+        var nextStates = transitions
+            .Select(t => t.NextState)
+            .Distinct()
+            .ToList();
+
+        var statesCombined = states
+            .Union(nextStates)
+            .ToList();
+
         var StatesMap = new Dictionary<int, string>();
 
-        int bitLength = (int)Math.Ceiling(Math.Log2(StatesMap.Count));
+        int bitLength = (int)Math.Ceiling(Math.Log2(statesCombined.Count));
 
-        for (int i = 0; i < states.Count; i++)
+        for (int i = 0; i < statesCombined.Count; i++)
         {
             string binaryRepresentation = Convert.ToString(i, 2).PadLeft(bitLength, '0');
 
-            StatesMap[states[i]] = binaryRepresentation;
+            StatesMap[statesCombined[i]] = binaryRepresentation;
         }
 
         return StatesMap;
