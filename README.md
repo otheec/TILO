@@ -41,7 +41,7 @@ This project implements a Turing machine that compares two binary numbers `x` an
 - **Alphabet**: `{0, 1, +}`.
 
 #### Steps
-1. **Design the Turing Machine for Comparison**: Define the Turing machine’s states and transitions to compare two binary numbers separated by `#`.
+1. **Design the Turing Machine for Comparison**: Define the Turing machine’s states and transitions to compare two binary numbers separated by `+`.
 2. **Implement Transition Functions**: Write the specific transition rules needed to perform the comparison operation.
 3. **Enhanced Simulation Features**:
    - **Custom Simulation**: Simulate the comparison Turing machine created in step 1.
