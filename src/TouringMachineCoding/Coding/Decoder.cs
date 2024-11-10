@@ -5,7 +5,7 @@ namespace TouringMachineCoding.Coding;
 
 internal class Decoder
 {
-    public static void Decode(string inputCode, string inputSymbols)
+    public static List<TransitionRule> Decode(string inputCode)
     {
         (int statesCount, int symbolsCount, string remainingCode) = GetTheCounts(inputCode);
 
@@ -18,6 +18,8 @@ internal class Decoder
         {
             Console.WriteLine($"State: {transition.State}, Read: {transition.Read}, Write: {transition.Write}, Move: {transition.Move}, Next State: {transition.NextState}");
         }
+
+        throw new NotImplementedException();
     }
 
     private static (int statesCount, int symbolsCount, string updatedCode) GetTheCounts(string code)
@@ -70,20 +72,9 @@ internal class Decoder
             int nextState = Convert.ToInt32(nextStateCode, 2);
             char move = DecodeHeadMovement(moveCode);
 
-            transitions.Add(new TransitionRule(state, read, write, move, nextState));
+            transitions.Add(new TransitionRule { State = state, Read = read, Write = write, Move= move, NextState = nextState });
         }
 
         return transitions;
-    }
-
-    private static char DecodeHeadMovement(string binaryMove)
-    {
-        return binaryMove switch
-        {
-            "00" => 'L',
-            "01" => 'R',
-            "10" => 'S',
-            _ => throw new ArgumentException("Invalid head movement code")
-        };
     }
 }
