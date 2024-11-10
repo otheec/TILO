@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using TouringMachineCoding.Models;
+﻿using TouringMachineCoding.Models;
 
 namespace TouringMachineCoding.Coding;
 
@@ -7,74 +6,67 @@ internal class Decoder
 {
     public static List<TransitionRule> Decode(string inputCode)
     {
-        (int statesCount, int symbolsCount, string remainingCode) = GetTheCounts(inputCode);
+        var decodedTransitions = new List<TransitionRule>();
 
-        Console.WriteLine($"States Count: {statesCount}");
-        Console.WriteLine($"Symbols Count: {symbolsCount}");
-
-        List<TransitionRule> transitions = ParseTransitions(remainingCode, statesCount, symbolsCount);
-
-        foreach (var transition in transitions)
+        int index = 0;
+        while (index < inputCode.Length)
         {
-            Console.WriteLine($"State: {transition.State}, Read: {transition.Read}, Write: {transition.Write}, Move: {transition.Move}, Next State: {transition.NextState}");
+            int state = CountInitialZerosAndCrop(ref inputCode);
+
+            var readCode = GetParsedCode(ref inputCode);
+            char? read = Symbols.DecodeSymbol(readCode);
+
+            int nextState = CountInitialZerosAndCrop(ref inputCode);
+
+            var writeCode = GetParsedCode(ref inputCode);
+            char? write = Symbols.DecodeSymbol(writeCode);
+
+            var moveCode = GetParsedCode(ref inputCode);
+            char move = HeadMovement.DecodeHeadMovement(moveCode);
+
+            decodedTransitions.Add(new TransitionRule
+            {
+                State = state,
+                Read = read,
+                Write = write,
+                Move = move,
+                NextState = nextState
+            });
         }
 
-        throw new NotImplementedException();
+        return decodedTransitions;
     }
 
-    private static (int statesCount, int symbolsCount, string updatedCode) GetTheCounts(string code)
+    private static int CountInitialZerosAndCrop(ref string input)
     {
-        var matches = Regex.Matches(code, "1+");
+        int zeroCount = 0;
+        int index = 1;
 
-        int statesIndicatorStart = matches[0].Index;
-        int statesIndicatorLength = matches[0].Value.Length;
-
-        int symbolsIndicatorStart = matches[1].Index;
-        int symbolsIndicatorLength = matches[1].Value.Length;
-
-        int statesZeroIndex = statesIndicatorStart + statesIndicatorLength;
-        int symbolsZeroIndex = symbolsIndicatorStart + symbolsIndicatorLength;
-
-        var updatedString = code.Remove(symbolsZeroIndex, 1)
-                                .Remove(symbolsIndicatorStart, symbolsIndicatorLength)
-                                .Remove(statesZeroIndex, 1)
-                                .Remove(statesIndicatorStart, statesIndicatorLength);
-
-        return (statesIndicatorLength, symbolsIndicatorLength, updatedString);
-    }
-
-    private static List<TransitionRule> ParseTransitions(string code, int statesCount, int symbolsCount)
-    {
-        var transitions = new List<TransitionRule>();
-
-        int stateLength = (int)Math.Ceiling(Math.Log2(statesCount));
-        int symbolLength = (int)Math.Ceiling(Math.Log2(symbolsCount));
-        int headMovementLength = 2;
-
-        int transitionLength = stateLength + symbolLength + stateLength + symbolLength + headMovementLength;
-
-        for (int i = 0; i < code.Length; i += transitionLength)
+        while (index < input.Length && input[index] == '0')
         {
-            if (i + transitionLength > code.Length)
-                break;
-
-            string transitionCode = code.Substring(i, transitionLength);
-
-            string stateCode = transitionCode.Substring(0, stateLength);
-            string readCode = transitionCode.Substring(stateLength, symbolLength);
-            string nextStateCode = transitionCode.Substring(stateLength + symbolLength, stateLength);
-            string writeCode = transitionCode.Substring(stateLength + symbolLength + stateLength, symbolLength);
-            string moveCode = transitionCode.Substring(stateLength + symbolLength + stateLength + symbolLength, headMovementLength);
-
-            int state = Convert.ToInt32(stateCode, 2);
-            int read = Convert.ToInt32(readCode, 2);
-            int write = Convert.ToInt32(writeCode, 2);
-            int nextState = Convert.ToInt32(nextStateCode, 2);
-            char move = DecodeHeadMovement(moveCode);
-
-            transitions.Add(new TransitionRule { State = state, Read = read, Write = write, Move= move, NextState = nextState });
+            zeroCount++;
+            index++;
         }
 
-        return transitions;
+        input = input.Substring(index);
+
+        return zeroCount - 1;
+    }
+
+    private static string GetParsedCode(ref string input)
+    {
+        int zeroCount = 0;
+        int index = 1;
+
+        while (index < input.Length && input[index] == '0')
+        {
+            zeroCount++;
+            index++;
+        }
+
+        var remainingPart = input.Substring(0, index);
+        input = input.Substring(index);
+
+        return remainingPart;
     }
 }

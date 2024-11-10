@@ -79,12 +79,24 @@ public class ComparisionTM
         Console.WriteLine(tape.ToString());
         Console.WriteLine("Steps count: " + tape.Counter);
 
+
+
         var encodedTransLines = Encoder.Encode(transitions);
+
         Console.WriteLine("Encoded translines: " + encodedTransLines);
 
+
+
         var decodedTransLines = Decoder.Decode(encodedTransLines);
-        var decodingInputTape = '_' + "111+1111" + '_';
-        TuringMachine decodingTM = new(new(decodingInputTape), decodedTransLines, endStates: [13]);
+        var decodingInputTape = input;
+
+        Tape decodingTape = new(decodingInputTape);
+        TuringMachine decodingTM = new(decodingTape, decodedTransLines, endStates: [13]);
+
         decodingTM.Run();
+
+        Console.WriteLine("Final tape state:");
+        Console.WriteLine(decodingTape.ToString());
+        Console.WriteLine("Steps count: " + decodingTape.Counter);
     }
 }

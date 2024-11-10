@@ -49,7 +49,7 @@ internal class Encoder
 
         for (int i = 0; i < statesCombined.Count; i++)
         {
-            string binaryRepresentation = "1" + new string('0', i);
+            string binaryRepresentation = "1" + new string('0', i+1);
 
             StatesMap[statesCombined[i]] = binaryRepresentation;
         }

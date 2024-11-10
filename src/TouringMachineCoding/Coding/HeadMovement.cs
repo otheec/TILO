@@ -13,7 +13,7 @@ internal static class HeadMovement
         };
     }
 
-    private static char DecodeHeadMovement(string binaryMove)
+    public static char DecodeHeadMovement(string binaryMove)
     {
         return binaryMove switch
         {
