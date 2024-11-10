@@ -28,7 +28,12 @@ internal class Encoder
             transLines.Add(newLine);
         }
 
-        return string.Join("", transLines);
+        string statesSizeIndicator = new string('1', statesMap.Count);
+        string symbolsSizeIndicator = new string('1', symbolsMap.Count);
+
+        var encodedLines = statesSizeIndicator + "0" + symbolsSizeIndicator + "0" + string.Join("", transLines);
+
+        return encodedLines;
     }
 
     private static char GetNotNullSymbol(char? symbol)
