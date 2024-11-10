@@ -73,13 +73,14 @@ public class ComparisionTM
 
         TuringMachine tm = new(tape, transitions, endStates: [13]);
 
-        Console.WriteLine(Encoder.Encode(transitions));
-
         tm.Run();
 
         Console.WriteLine("Final tape state:");
         Console.WriteLine(tape.ToString());
+        Console.WriteLine("Steps count: " + tape.Counter);
 
-        Console.WriteLine(tape.Counter);
+        Console.WriteLine(Encoder.Encode(transitions));
+
+        Decoder.Decode("", "");
     }
 }
