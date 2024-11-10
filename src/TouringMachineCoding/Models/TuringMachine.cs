@@ -1,12 +1,12 @@
 ﻿namespace TouringMachineCoding.Models;
 
-class TuringMachine(Tape tape, List<TransitionRule> transitions, List<State> endStates)
+class TuringMachine(Tape tape, List<TransitionRule> transitions, List<int> endStates)
 {
     private readonly Tape _tape = tape;
     private readonly List<TransitionRule> _transitions = transitions;
-    private readonly List<State> _endStates = endStates;
+    private readonly List<int> _endStates = endStates;
 
-    private State CurrentState = State.START;
+    private int CurrentState = 0;
 
     public void Run()
     {
@@ -28,7 +28,7 @@ class TuringMachine(Tape tape, List<TransitionRule> transitions, List<State> end
 
     private TransitionRule? FindTransition()
     {
-        string currentSymbol = _tape.Read();
+        char currentSymbol = _tape.Read();
         foreach (var transition in _transitions)
         {
             if (transition.State.Equals(CurrentState) && transition.Read == currentSymbol)
@@ -45,7 +45,7 @@ class TuringMachine(Tape tape, List<TransitionRule> transitions, List<State> end
 
         if (transition.Write.HasValue)
         {
-            _tape.Write(transition.Write.Value.ToString());
+            _tape.Write(transition.Write.Value);
         }
 
         CurrentState = transition.NextState;
@@ -59,16 +59,21 @@ class TuringMachine(Tape tape, List<TransitionRule> transitions, List<State> end
 
 class TransitionRule
 {
-    public State State { get; init; }
-    public string? Read { get; init; }
+    public int State { get; init; }
+    public char? Read { get; init; }
     public char? Write { get; init; }
     public char? Move { get; init; }
-    public State NextState { get; init; }
+    public int NextState { get; init; }
 }
+
+/*
+
+not using enum for states anymore, made it easier for encoding and decoding
+left them there for debugging purposes
 
 enum State
 {
-    START,
+    START, 
 
     FIND_START_OF_THE_NUMER_R,
     FIND_1_R,
@@ -89,21 +94,21 @@ enum State
     WRITE_1,
 
     HALT
-}
+}*/
 
 class Tape(string input)
 {
-    private List<string> Symbols = new(input.ToCharArray().Select(c => c.ToString()));
+    private List<char> Symbols = new(input.ToCharArray());
     private int Head = 0;
 
     public int Counter = 0;
 
-    public string Read()
+    public char Read()
     {
         return Symbols[Head];
     }
 
-    public void Write(string symbol)
+    public void Write(char symbol)
     {
         Symbols[Head] = symbol;
     }
@@ -136,7 +141,7 @@ class Tape(string input)
         if (Head == 0 && transition.Move == 'L')
         {
             Head++;
-            Symbols.Insert(0, "_");
+            Symbols.Insert(0, '_');
         }
     }
 }

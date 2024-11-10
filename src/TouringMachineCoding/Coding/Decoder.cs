@@ -1,9 +1,14 @@
-﻿namespace TouringMachineCoding.Coding;
+﻿using TouringMachineCoding.Models;
+
+namespace TouringMachineCoding.Coding;
 
 internal class Decoder
 {
-    public void Run(string inputCode)
+    public static void Run(string inputCode, string inputSymbols)
     {
+
+        //TuringMachine = new ("_" + inputSymbols + "_", transitions, states);
+
         throw new NotImplementedException();
     }
 }

@@ -1,4 +1,5 @@
-﻿using TouringMachineCoding.Models;
+﻿using TouringMachineCoding.Coding;
+using TouringMachineCoding.Models;
 
 namespace TouringMachineCoding.Implementations;
 
@@ -15,62 +16,64 @@ public class ComparisionTM
             return;
         }
 
-        input = "_" + input + "_";
+        input = '_' + input + '_';
         Tape tape = new(input);
 
         List<TransitionRule> transitions = [
             //START
-            new TransitionRule { State = State.START,  Read = "_", Move = 'R', NextState = State.FIND_START_OF_THE_NUMER_R },
-            //ZMENSIT LEVE CISLO
-            new TransitionRule { State = State.FIND_START_OF_THE_NUMER_R,  Read = "0", Move = 'R', NextState = State.FIND_START_OF_THE_NUMER_R },
-            new TransitionRule { State = State.FIND_START_OF_THE_NUMER_R,  Read = "1", Move = 'R', NextState = State.FIND_START_OF_THE_NUMER_R },
-            new TransitionRule { State = State.FIND_START_OF_THE_NUMER_R,  Read = "+", Move = 'L', NextState = State.FIND_1_R },
+            new TransitionRule { State = 0,  Read = '_', Move = 'R', NextState = 1 },
+            //Decrease left number
+            new TransitionRule { State = 1,  Read = '0', Move = 'R', NextState = 1 },
+            new TransitionRule { State = 1,  Read = '1', Move = 'R', NextState = 1 },
+            new TransitionRule { State = 1,  Read = '+', Move = 'L', NextState = 2 },
 
-            new TransitionRule { State = State.FIND_1_R,  Read = "0", Move = 'L', NextState = State.FIND_1_R },
-            new TransitionRule { State = State.FIND_1_R,  Read = "1", Write = '0', Move = 'R', NextState = State.DECREASE_R },
-            new TransitionRule { State = State.FIND_1_R,  Read = "_", Move = 'R', NextState = State.TRAVERSE_0 },
+            new TransitionRule { State = 2,  Read = '0', Move = 'L', NextState = 2 },
+            new TransitionRule { State = 2,  Read = '1', Write = '0', Move = 'R', NextState = 3 },
+            new TransitionRule { State = 2,  Read = '_', Move = 'R', NextState = 8 },
 
-            new TransitionRule { State = State.DECREASE_R,  Read = "0", Write = '1', Move = 'R', NextState = State.DECREASE_R },
-            new TransitionRule { State = State.DECREASE_R,  Read = "+", Move = 'R', NextState = State.TRAVERSE_R },
-            //PRESUN NA PRAVY ZACATEK
-            new TransitionRule { State = State.TRAVERSE_R,  Read = "0", Move = 'R', NextState = State.TRAVERSE_R },
-            new TransitionRule { State = State.TRAVERSE_R,  Read = "1", Move = 'R', NextState = State.TRAVERSE_R },
-            new TransitionRule { State = State.TRAVERSE_R,  Read = "+", Move = 'R', NextState = State.TRAVERSE_R },
-            new TransitionRule { State = State.TRAVERSE_R,  Read = "_", Move = 'L', NextState = State.FIND_1_L },
-            //ZMENSIT PRAVE CISLO
-            new TransitionRule { State = State.FIND_1_L,  Read = "0", Move = 'L', NextState = State.FIND_1_L },
-            new TransitionRule { State = State.FIND_1_L,  Read = "1", Write = '0', Move = 'R', NextState = State.DECREASE_L },
-            new TransitionRule { State = State.FIND_1_L,  Read = "+", Write = '0', Move = 'L', NextState = State.TRAVERSE_1 },
+            new TransitionRule { State = 3,  Read = '0', Write = '1', Move = 'R', NextState = 3 },
+            new TransitionRule { State = 3,  Read = '+', Move = 'R', NextState = 4 },
+            //Traverse to the start of right number
+            new TransitionRule { State = 4,  Read = '0', Move = 'R', NextState = 4 },
+            new TransitionRule { State = 4,  Read = '1', Move = 'R', NextState = 4 },
+            new TransitionRule { State = 4,  Read = '+', Move = 'R', NextState = 4 },
+            new TransitionRule { State = 4,  Read = '_', Move = 'L', NextState = 5 },
+            //Decrease right number
+            new TransitionRule { State = 5,  Read = '0', Move = 'L', NextState = 5 },
+            new TransitionRule { State = 5,  Read = '1', Write = '0', Move = 'R', NextState = 6 },
+            new TransitionRule { State = 5,  Read = '+', Write = '0', Move = 'L', NextState = 9},
 
-            new TransitionRule { State = State.DECREASE_L,  Read = "0", Write = '1', Move = 'R', NextState = State.DECREASE_L },
-            new TransitionRule { State = State.DECREASE_L,  Read = "_", Move = 'L', NextState = State.FIND_PLUS },
-            //NAJDI PLUS
-            new TransitionRule { State = State.FIND_PLUS,  Read = "0", Move = 'L', NextState = State.FIND_PLUS },
-            new TransitionRule { State = State.FIND_PLUS,  Read = "1", Move = 'L', NextState = State.FIND_PLUS },
-            new TransitionRule { State = State.FIND_PLUS,  Read = "+", Move = 'L', NextState = State.FIND_1_R },
-            //PRESUN NA PRAVY ZACATEK PRO MAZANI NA _
-            new TransitionRule { State = State.TRAVERSE_0,  Read = "0", Write = '_', Move = 'R', NextState = State.TRAVERSE_0 },
-            new TransitionRule { State = State.TRAVERSE_0,  Read = "1", Write = '_', Move = 'R', NextState = State.TRAVERSE_0 },
-            new TransitionRule { State = State.TRAVERSE_0,  Read = "+", Write = '_', Move = 'R', NextState = State.TRAVERSE_0 },
-            new TransitionRule { State = State.TRAVERSE_0,  Read = "_", Move = 'L', NextState = State.WRITE_0 },
-            //ZAPIS 0
-            new TransitionRule { State = State.WRITE_0,  Read = "_", Write = '0', Move = 'L', NextState = State.HALT },
-            //PRESUN NA LEVY ZACATEK PRO MAZANI NA 0
-            new TransitionRule { State = State.TRAVERSE_1,  Read = "0", Write = '0', Move = 'L', NextState = State.TRAVERSE_1 },
-            new TransitionRule { State = State.TRAVERSE_1,  Read = "1", Write = '0', Move = 'L', NextState = State.TRAVERSE_1 },
-            new TransitionRule { State = State.TRAVERSE_1,  Read = "+", Write = '0', Move = 'L', NextState = State.TRAVERSE_1 },
-            new TransitionRule { State = State.TRAVERSE_1,  Read = "_", Move = 'R', NextState = State.TRAVERSE_11 },
-            //PRESUN NA PRAVY ZACATEK PRO MAZANI NA _
-            new TransitionRule { State = State.TRAVERSE_11,  Read = "0", Write = '_', Move = 'R', NextState = State.TRAVERSE_11 },
-            new TransitionRule { State = State.TRAVERSE_11,  Read = "1", Write = '_', Move = 'R', NextState = State.TRAVERSE_11 },
-            new TransitionRule { State = State.TRAVERSE_11,  Read = "+", Write = '_', Move = 'R', NextState = State.TRAVERSE_11 },
-            new TransitionRule { State = State.TRAVERSE_11,  Read = "_", Move = 'L', NextState = State.WRITE_1 },
-            //ZAPIS 1
-            new TransitionRule { State = State.WRITE_1,  Read = "_", Write = '1', Move = 'L', NextState = State.HALT },
+            new TransitionRule { State = 6,  Read = '0', Write = '1', Move = 'R', NextState = 6 },
+            new TransitionRule { State = 6,  Read = '_', Move = 'L', NextState = 7 },
+            //Find plus sign (numbers separator)
+            new TransitionRule { State = 7,  Read = '0', Move = 'L', NextState = 7 },
+            new TransitionRule { State = 7,  Read = '1', Move = 'L', NextState = 7 },
+            new TransitionRule { State = 7,  Read = '+', Move = 'L', NextState = 2 },
+            //Traverse to the right side (0 output)
+            new TransitionRule { State = 8,  Read = '0', Write = '_', Move = 'R', NextState = 8 },
+            new TransitionRule { State = 8,  Read = '1', Write = '_', Move = 'R', NextState = 8 },
+            new TransitionRule { State = 8,  Read = '+', Write = '_', Move = 'R', NextState = 8 },
+            new TransitionRule { State = 8,  Read = '_', Move = 'L', NextState = 11 },
+            //Write 0
+            new TransitionRule { State = 11,  Read = '_', Write = '0', Move = 'L', NextState = 13 },
+            //Traverse to the Left side (1 output)
+            new TransitionRule { State = 9, Read = '0', Write = '0', Move = 'L', NextState = 9},
+            new TransitionRule { State = 9, Read = '1', Write = '0', Move = 'L', NextState = 9},
+            new TransitionRule { State = 9, Read = '+', Write = '0', Move = 'L', NextState = 9},
+            new TransitionRule { State = 9, Read = '_', Move = 'R', NextState = 10},
+            //Traverse to the right side (1 output)
+            new TransitionRule { State = 10,  Read = '0', Write = '_', Move = 'R', NextState = 10},
+            new TransitionRule { State = 10,  Read = '1', Write = '_', Move = 'R', NextState = 10},
+            new TransitionRule { State = 10,  Read = '+', Write = '_', Move = 'R', NextState = 10},
+            new TransitionRule { State = 10,  Read = '_', Move = 'L', NextState = 12 },
+            //Write 1
+            new TransitionRule { State = 12,  Read = '_', Write = '1', Move = 'L', NextState = 13 },
 
         ];
 
-        TuringMachine tm = new(tape, transitions, endStates: [State.HALT]);
+        TuringMachine tm = new(tape, transitions, endStates: [13]);
+
+        Encoder.Encode(transitions);
 
         tm.Run();
 
