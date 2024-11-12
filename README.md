@@ -47,3 +47,11 @@ This project implements a Turing machine that compares two binary numbers `x` an
    - **Custom Simulation**: Simulate the comparison Turing machine created in step 1.
    - **Binary Encoding of Turing Machines**: Allow encoding of machine structure in binary format for easy interpretation by the simulator.
    - **Binary Code Conversion**: Convert binary-coded Turing machine structures into a format usable by the simulator.
+
+### 4. Graph Traversal
+
+This program evaluates nodes in a weighted, connected graph with edges requiring resources to traverse. The goal is to maximize resource gain (`z`) while adhering to a set budget (`r`).
+
+### Problem Description
+- **Input:** A graph of evaluated nodes connected by weighted edges.
+- **Output:** For each step `t`, the program outputs the state `r`, `z`, along with the edge and node used
