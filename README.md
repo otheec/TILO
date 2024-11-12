@@ -1,9 +1,9 @@
-# TILO - Turing Machine Project
+# TILO
 
 <a href="https://sites.google.com/view/7tilo-xtilo/home">7TILO website</a>
 
 ## Overview
-TILO is a collection of Turing machine implementations designed to demonstrate various computational capabilities, including single-tape and multi-tape machines. These machines simulate fundamental computational processes and are built to handle binary operations. Below are the key projects within TILO.
+TILO is a collection of Computer Science excercises
 
 ## Projects
 
