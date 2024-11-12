@@ -1,7 +1,6 @@
 ﻿using GraphFund.Model;
 
 namespace GraphFund.Services;
-
 internal class GraphProvider
 {
     public static List<Node> GetGraph()

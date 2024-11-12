@@ -1,5 +1,4 @@
 ﻿namespace GraphFund.Model;
-
 internal class Solution(int rozpocet, int zdroje, List<Node> path)
 {
     public int rozpocet = rozpocet;
