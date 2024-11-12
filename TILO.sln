@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuringMachineProject", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TuringMachineCoding", "src\TuringMachineCoding\TuringMachineCoding.csproj", "{4C91148D-DFDA-4727-93E2-CE14930CD8DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphFund", "GraphFund\GraphFund.csproj", "{6A333008-553F-4E37-BEA8-99AE89D40505}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4C91148D-DFDA-4727-93E2-CE14930CD8DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C91148D-DFDA-4727-93E2-CE14930CD8DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C91148D-DFDA-4727-93E2-CE14930CD8DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A333008-553F-4E37-BEA8-99AE89D40505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A333008-553F-4E37-BEA8-99AE89D40505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A333008-553F-4E37-BEA8-99AE89D40505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A333008-553F-4E37-BEA8-99AE89D40505}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
