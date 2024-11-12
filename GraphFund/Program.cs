@@ -1,4 +1,4 @@
-﻿using GraphFund.Model;
+﻿using GraphFund.Services;
 
-Graph gf = new();
-gf.Run();
+var graph = GraphProvider.GetGraph();
+GraphSolver.Solve(graph);

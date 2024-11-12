@@ -18,29 +18,25 @@ internal class Solution(int rozpocet, int zdroje, List<Node> path)
     public List<Solution> Run()
     {
         List<Solution> ret = [this];
+        var allChildren = GetAllUnvisited();
 
-        var allChildrens = GetAllUnvisited();
-
-        for (int i = 0; i < allChildrens.Count; i++)
+        foreach (var child in allChildren)
         {
-            if (allChildrens[i].ConnectionValue < rozpocet)
+            if (child.ConnectionValue < rozpocet || child.ConnectionValue < rozpocet + zdroje)
             {
-                var newPath = new List<Node>(path);
-                newPath.Add(allChildrens[i]);
+                var newPath = new List<Node>(path) { child };
+                int newRozpocet, newZdroje;
 
-                var newRozpocet = rozpocet - allChildrens[i].ConnectionValue;
-                var newZdroje = zdroje + allChildrens[i].NodeValue;
-
-                var nextSol = new Solution(newRozpocet, newZdroje, newPath);
-                ret.AddRange(nextSol.Run());
-            }
-            else if (allChildrens[i].ConnectionValue < rozpocet + zdroje)
-            {
-                var newPath = new List<Node>(path);
-                newPath.Add(allChildrens[i]);
-
-                var newZdroje = zdroje + (rozpocet - allChildrens[i].ConnectionValue);
-                var newRozpocet = 0;
+                if (child.ConnectionValue < rozpocet)
+                {
+                    newRozpocet = rozpocet - child.ConnectionValue;
+                    newZdroje = zdroje + child.NodeValue;
+                }
+                else
+                {
+                    newRozpocet = 0;
+                    newZdroje = zdroje + (rozpocet - child.ConnectionValue);
+                }
 
                 var nextSol = new Solution(newRozpocet, newZdroje, newPath);
                 ret.AddRange(nextSol.Run());
