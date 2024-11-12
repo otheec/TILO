@@ -13,9 +13,9 @@ internal class GraphSolver
         var result = sol.Run();
         var bestResult = result.OrderByDescending(r => r.zdroje).First();
 
-        bestResult.path
+        bestResult.visitedNodes
             .ForEach(n => Console.WriteLine(
-                $"[t_{bestResult.path.IndexOf(n) + 1}] " +
+                $"[t_{bestResult.visitedNodes.IndexOf(n) + 1}] " +
                 $"h_i ({n.ConnectionValue}), " +
                 $"u_i ({n.NodeValue}) => " +
                 $"{rozpocet -= n.ConnectionValue}, " +

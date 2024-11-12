@@ -1,29 +1,29 @@
 ﻿namespace GraphFund.Model;
-internal class Solution(int rozpocet, int zdroje, List<Node> path)
+internal class Solution(int rozpocet, int zdroje, List<Node> visitedNodes)
 {
     public int rozpocet = rozpocet;
     public int zdroje = zdroje;
-    public List<Node> path = path;
+    public List<Node> visitedNodes = visitedNodes;
 
-    private List<Node> GetAllUnvisited()
+    private List<Node> GetUnvisitedChildrens()
     {
-        return path
+        return visitedNodes
             .Where(n => n.Childrens != null)
             .SelectMany(n => n.Childrens!)
-            .Where(n => n != null && !path.Contains(n))
+            .Where(n => n != null && !visitedNodes.Contains(n))
             .ToList();
     }
 
     public List<Solution> Run()
     {
         List<Solution> ret = [this];
-        var allChildren = GetAllUnvisited();
+        var allChildren = GetUnvisitedChildrens();
 
         foreach (var child in allChildren)
         {
             if (child.ConnectionValue < rozpocet || child.ConnectionValue < rozpocet + zdroje)
             {
-                var newPath = new List<Node>(path) { child };
+                var newVisitedNodes = new List<Node>(visitedNodes) { child };
                 int newRozpocet, newZdroje;
 
                 if (child.ConnectionValue < rozpocet)
@@ -37,7 +37,7 @@ internal class Solution(int rozpocet, int zdroje, List<Node> path)
                     newZdroje = zdroje + (rozpocet - child.ConnectionValue);
                 }
 
-                var nextSol = new Solution(newRozpocet, newZdroje, newPath);
+                var nextSol = new Solution(newRozpocet, newZdroje, newVisitedNodes);
                 ret.AddRange(nextSol.Run());
             }
         }
