@@ -34,6 +34,17 @@ internal class Solution(int rozpocet, int zdroje, List<Node> path)
                 var nextSol = new Solution(newRozpocet, newZdroje, newPath);
                 ret.AddRange(nextSol.Run());
             }
+            else if (allChildrens[i].ConnectionValue < rozpocet + zdroje)
+            {
+                var newPath = new List<Node>(path);
+                newPath.Add(allChildrens[i]);
+
+                var newZdroje = zdroje + (rozpocet - allChildrens[i].ConnectionValue);
+                var newRozpocet = 0;
+
+                var nextSol = new Solution(newRozpocet, newZdroje, newPath);
+                ret.AddRange(nextSol.Run());
+            }
         }
 
         return ret;
