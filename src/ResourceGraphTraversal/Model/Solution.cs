@@ -1,4 +1,4 @@
-﻿namespace GraphFund.Model;
+﻿namespace ResourceGraphTraversal.Model;
 internal class Solution(int rozpocet, int zdroje, List<Node> visitedNodes)
 {
     public int rozpocet = rozpocet;

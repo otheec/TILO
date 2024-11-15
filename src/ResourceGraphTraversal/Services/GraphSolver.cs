@@ -1,6 +1,6 @@
-﻿using GraphFund.Model;
+﻿using ResourceGraphTraversal.Model;
 
-namespace GraphFund.Services;
+namespace ResourceGraphTraversal.Services;
 internal class GraphSolver
 {
     public static void Solve(List<Node> nodes)
@@ -16,9 +16,11 @@ internal class GraphSolver
         bestResult.visitedNodes
             .ForEach(n => Console.WriteLine(
                 $"[t_{bestResult.visitedNodes.IndexOf(n) + 1}] " +
-                $"h_i ({n.ConnectionValue}), " +
-                $"u_i ({n.NodeValue}) => " +
-                $"{rozpocet -= n.ConnectionValue}, " +
-                $"{zdroje += n.NodeValue}"));
+                $"{n.ConnectionValue}, " +
+                $"{n.NodeValue} => " +
+                $"r={rozpocet -= n.ConnectionValue}, " +
+                $"z={zdroje += n.NodeValue}"));
+
+        Console.WriteLine("\nCollected zdroje: " + zdroje); 
     }
 }

@@ -1,7 +1,7 @@
-﻿namespace GraphFund.Model;
+﻿namespace ResourceGraphTraversal.Model;
 internal class Node
 {
-    public int ConnectionValue {  get; set; }
+    public int ConnectionValue { get; set; }
     public int NodeValue { get; set; }
     public List<Node>? Childrens { get; set; } = null;
 

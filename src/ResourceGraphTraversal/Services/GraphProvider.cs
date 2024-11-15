@@ -1,6 +1,6 @@
-﻿using GraphFund.Model;
+﻿using ResourceGraphTraversal.Model;
 
-namespace GraphFund.Services;
+namespace ResourceGraphTraversal.Services;
 internal class GraphProvider
 {
     public static List<Node> GetGraph()
