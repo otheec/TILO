@@ -29,35 +29,38 @@ internal class GraphSolver
         var output = algorithm.Solve();
         int totalKm = 0;
         int dayCounter = 1;
-        int dailyUnits = 8;
-        int remainingUnitsToday = dailyUnits;
+        int dailyLimit = 8;
+        int remainingHoursToday = dailyLimit;
 
         HashSet<Node> alreadyVisited = new() { output[0].Source, output[0].Destination };
 
         foreach (var edge in output)
         {
-            int workUnits = edge.Value + ((alreadyVisited.Contains(edge.Source) || alreadyVisited.Contains(edge.Destination)) ? 0 : 1);
+            int workHours = edge.Value + ((alreadyVisited.Contains(edge.Source) || alreadyVisited.Contains(edge.Destination)) ? 0 : 1);
+            int workKm = edge.Value;
+            totalKm += workKm;
 
             alreadyVisited.Add(edge.Source);
             alreadyVisited.Add(edge.Destination);
 
-            while (workUnits > 0)
+            while (workHours > 0)
             {
-                int workToday = Math.Min(workUnits, remainingUnitsToday);
-                totalKm += workToday;
-                remainingUnitsToday -= workToday;
-                workUnits -= workToday;
+                int workHoursToday = Math.Min(workHours, remainingHoursToday);
+                int workKmToday = Math.Min(workKm, remainingHoursToday);
 
-                if(workToday != 0)
-                    Console.WriteLine($"[Day {dayCounter}] {edge.Source.Name} -> {edge.Destination.Name}: {workToday} hours, {workToday} km");
+                remainingHoursToday -= workHoursToday;
+                workHours -= workHoursToday;
+                workKm -= workKmToday;
 
-                if (remainingUnitsToday == 0 && workUnits > 0)
+                if(workHoursToday != 0)
+                    Console.WriteLine($"[Day {dayCounter}] {edge.Source.Name} -> {edge.Destination.Name}: {workHoursToday} hours, {workKmToday} km");
+
+                if (remainingHoursToday == 0 && workHours > 0)
                 {
                     dayCounter++;
-                    remainingUnitsToday = dailyUnits;
+                    remainingHoursToday = dailyLimit;
                 }
             }
-
         }
 
         Console.WriteLine($"result: {dayCounter} days, {totalKm} km");
