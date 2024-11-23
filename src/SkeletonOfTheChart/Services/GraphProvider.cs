@@ -6,16 +6,16 @@ internal class GraphProvider
     public static List<Edge> GetGraph()
     {
         Node Tristram = new Node("Tristram");
-        Node Loard = new Node("Loard");
+        Node Loard = new Node("Loardeon");
         Node Arraken = new Node("Arraken");
         Node Lanisport = new Node("Lanisport");
-        Node Ankh = new Node("Ankh");
-        Node Most = new Node("Most");
-        Node LV = new Node("LV");
-        Node Godric = new Node("Godric");
+        Node Ankh = new Node("Ankh Morpork");
+        Node Most = new Node("Mos Eirsley");
+        Node LV = new Node("LV 426");
+        Node Godric = new Node("Godric's Hollow");
         Node Mordeihm = new Node("Mordeihm");
         Node Gondolin = new Node("Gondolin");
-        Node MinasTirth = new Node("Minas Tirth");
+        Node MinasTirth = new Node("Minas Tirith");
         Node Rivie = new Node("Rivie");
         Node Solitude = new Node("Solitude");
 
