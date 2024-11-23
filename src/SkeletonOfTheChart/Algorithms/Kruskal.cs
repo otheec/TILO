@@ -1,7 +1,8 @@
-﻿using SkeletonOfTheChart.Model;
+﻿using SkeletonOfTheChart.Interfaces;
+using SkeletonOfTheChart.Model;
 
 namespace SkeletonOfTheChart.Algorithms;
-internal class Kruskal(List<Edge> edges)
+internal class Kruskal(List<Edge> edges) : IAlgorithm
 {
     public List<Edge> Solve()
     {

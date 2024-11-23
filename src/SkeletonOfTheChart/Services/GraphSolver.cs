@@ -1,4 +1,5 @@
 ﻿using SkeletonOfTheChart.Algorithms;
+using SkeletonOfTheChart.Interfaces;
 using SkeletonOfTheChart.Model;
 
 namespace SkeletonOfTheChart.Services;
@@ -6,38 +7,53 @@ internal class GraphSolver
 {
     public static void Solve(List<Edge> edges)
     {
-        Kruskal kruskal = new(edges);
-        var kruskalOutput = kruskal.Solve();
-        int kruskalCounter = 0;
-
-        for (int i = 0; i < kruskalOutput.Count; i++)
-        {
-            var e = kruskalOutput[i];
-            Console.WriteLine($"{e.Value} {e.Nodes[0].Name} {e.Nodes[1].Name}");
-        }
+        Console.WriteLine("Kruskal Algorithm:");
+        SolveAlgorithm(new Kruskal(edges));
 
         Console.WriteLine("----------------------------------");
 
-        Boruvka boruvka = new(edges);
-        var boruvkaOutput = boruvka.Solve();
-        int boruvkaCounter = 0;
-
-        for (int i = 0; i < boruvkaOutput.Count; i++)
-        {
-            var e = boruvkaOutput[i];
-            Console.WriteLine($"{e.Value} {e.Nodes[0].Name} {e.Nodes[1].Name}");
-        }
+        Console.WriteLine("Boruvka Algorithm:");
+        SolveAlgorithm(new Boruvka(edges));
 
         Console.WriteLine("----------------------------------");
 
-        Jarnik jarnik = new(edges);
-        var jarnikOutput = jarnik.Solve();
-        int jarnikCounter = 0;
+        Console.WriteLine("Jarnik Algorithm:");
+        SolveAlgorithm(new Jarnik(edges));
+    }
 
-        for (int i = 0; i < jarnikOutput.Count; i++)
+    private static void SolveAlgorithm(IAlgorithm algorithm)
+    {
+        var output = algorithm.Solve();
+        int totalKm = 0;
+
+        int dayCounter = 1;
+        int dailyHours = 8;
+        int hoursSpentToday = 0;
+
+        foreach (var edge in output)
         {
-            var e = jarnikOutput[i];
-            Console.WriteLine($"{e.Value} {e.Nodes[0].Name} {e.Nodes[1].Name}");
+            int workHours = edge.Value + (hoursSpentToday > 0 ? 1 : 0);
+            int workKm = Math.Min(edge.Value, dailyHours - hoursSpentToday);
+            hoursSpentToday += workKm;
+
+            if (hoursSpentToday > dailyHours)
+            {
+                hoursSpentToday = 0;
+                dayCounter++;
+                hoursSpentToday = workKm;
+            }
+
+            totalKm += workKm;
+
+            Console.WriteLine($"[Day {dayCounter}] {edge.Nodes[0].Name} -> {edge.Nodes[1].Name}: {workHours} hours, {workKm} km");
+
+            if (hoursSpentToday == dailyHours)
+            {
+                hoursSpentToday = 0;
+                dayCounter++;
+            }
         }
+
+        Console.WriteLine($"result: {dayCounter} days, {totalKm} km");
     }
 }

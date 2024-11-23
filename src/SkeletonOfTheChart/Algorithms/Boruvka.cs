@@ -1,80 +1,100 @@
-﻿using SkeletonOfTheChart.Model;
+﻿using SkeletonOfTheChart.Interfaces;
+using SkeletonOfTheChart.Model;
 
 namespace SkeletonOfTheChart.Algorithms;
-internal class Boruvka(List<Edge> edges)
+internal class Boruvka(List<Edge> edges) : IAlgorithm
 {
     public List<Edge> Solve()
     {
-        var nodes = edges.SelectMany(e => e.Nodes).Distinct().ToList();
+        var nodeToId = edges
+            .SelectMany(e => e.Nodes)
+            .Distinct()
+            .Select((node, index) => new { node, index })
+            .ToDictionary(x => x.node, x => x.index);
 
-        var parent = new Dictionary<Node, Node>();
-        foreach (var node in nodes)
-        {
-            parent[node] = node;
-        }
+        int vertices = nodeToId.Count;
 
-        Node Find(Node node)
-        {
-            if (parent[node] != node)
-            {
-                parent[node] = Find(parent[node]);
-            }
-            return parent[node];
-        }
-
-        void Union(Node node1, Node node2)
-        {
-            var root1 = Find(node1);
-            var root2 = Find(node2);
-            if (root1 != root2)
-            {
-                parent[root1] = root2;
-            }
-        }
-
+        var subsets = new Subset[vertices];
+        var cheapest = new Edge[vertices];
         var mstEdges = new List<Edge>();
-        var components = nodes.ToDictionary(node => node, node => Find(node));
 
-        while (components.Values.Distinct().Count() > 1)
+        for (int v = 0; v < vertices; v++)
         {
-            // Find the cheapest edge for each component
-            var cheapestEdge = new Dictionary<Node, Edge>();
+            subsets[v] = new Subset { Root = v, Weight = 0 };
+            cheapest[v] = null;
+        }
+
+        int numTrees = vertices;
+
+        while (numTrees > 1)
+        {
+            for (int v = 0; v < vertices; v++)
+                cheapest[v] = null;
+
             foreach (var edge in edges)
             {
-                var node1 = Find(edge.Nodes[0]);
-                var node2 = Find(edge.Nodes[1]);
+                int set1 = Find(subsets, nodeToId[edge.Source]);
+                int set2 = Find(subsets, nodeToId[edge.Destination]);
 
-                if (node1 != node2)
-                {
-                    if (!cheapestEdge.ContainsKey(node1) || cheapestEdge[node1].Value > edge.Value)
-                    {
-                        cheapestEdge[node1] = edge;
-                    }
+                if (set1 == set2)
+                    continue;
 
-                    if (!cheapestEdge.ContainsKey(node2) || cheapestEdge[node2].Value > edge.Value)
-                    {
-                        cheapestEdge[node2] = edge;
-                    }
-                }
+                if (cheapest[set1] == null || cheapest[set1].Value > edge.Value)
+                    cheapest[set1] = edge;
+
+                if (cheapest[set2] == null || cheapest[set2].Value > edge.Value)
+                    cheapest[set2] = edge;
             }
 
-            // Add the selected edges to the MST and union the components
-            foreach (var edge in cheapestEdge.Values.Distinct())
+            for (int i = 0; i < vertices; i++)
             {
-                var node1 = edge.Nodes[0];
-                var node2 = edge.Nodes[1];
+                Edge edge = cheapest[i];
 
-                if (Find(node1) != Find(node2))
+                if (edge != null)
                 {
-                    mstEdges.Add(edge);
-                    Union(node1, node2);
+                    int set1 = Find(subsets, nodeToId[edge.Source]);
+                    int set2 = Find(subsets, nodeToId[edge.Destination]);
+
+                    if (set1 != set2)
+                    {
+                        mstEdges.Add(edge);
+                        Union(subsets, set1, set2);
+                        numTrees--;
+                    }
                 }
             }
-
-            // Update components
-            components = nodes.ToDictionary(node => node, node => Find(node));
         }
 
         return mstEdges;
+    }
+
+    private static int Find(Subset[] subsets, int i)
+    {
+        if (subsets[i].Root != i)
+            subsets[i].Root = Find(subsets, subsets[i].Root);
+
+        return subsets[i].Root;
+    }
+
+    private static void Union(Subset[] subsets, int x, int y)
+    {
+        int xroot = Find(subsets, x);
+        int yroot = Find(subsets, y);
+
+        if (subsets[xroot].Weight < subsets[yroot].Weight)
+            subsets[xroot].Root = yroot;
+        else if (subsets[xroot].Weight > subsets[yroot].Weight)
+            subsets[yroot].Root = xroot;
+        else
+        {
+            subsets[yroot].Root = xroot;
+            subsets[xroot].Weight++;
+        }
+    }
+
+    private class Subset
+    {
+        public int Root { get; set; }
+        public int Weight { get; set; }
     }
 }
