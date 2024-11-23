@@ -10,12 +10,12 @@ internal class GraphSolver
         Console.WriteLine("Kruskal Algorithm:");
         SolveAlgorithm(new Kruskal(edges));
 
-        Console.WriteLine("----------------------------------");
+        Console.WriteLine("----------------------------------\n");
 
         Console.WriteLine("Boruvka Algorithm:");
         SolveAlgorithm(new Boruvka(edges));
 
-        Console.WriteLine("----------------------------------");
+        Console.WriteLine("----------------------------------\n");
 
         Console.WriteLine("Jarnik Algorithm:");
         SolveAlgorithm(new Jarnik(edges));
@@ -25,35 +25,42 @@ internal class GraphSolver
     {
         var output = algorithm.Solve();
         int totalKm = 0;
-
         int dayCounter = 1;
-        int dailyHours = 8;
-        int hoursSpentToday = 0;
+        int dailyUnits = 8;
+        int remainingUnitsToday = dailyUnits;
+
+        int asdsad = 0;
+
+        HashSet<Node> alreadyVisited = new() { output[0].Source, output[0].Destination };
 
         foreach (var edge in output)
         {
-            int workHours = edge.Value + (hoursSpentToday > 0 ? 1 : 0);
-            int workKm = Math.Min(edge.Value, dailyHours - hoursSpentToday);
-            hoursSpentToday += workKm;
+            asdsad += edge.Value;
+            int workUnits = edge.Value + ((alreadyVisited.Contains(edge.Source) || alreadyVisited.Contains(edge.Destination)) ? 0 : 1);
 
-            if (hoursSpentToday > dailyHours)
+            alreadyVisited.Add(edge.Source);
+            alreadyVisited.Add(edge.Destination);
+
+            while (workUnits > 0)
             {
-                hoursSpentToday = 0;
-                dayCounter++;
-                hoursSpentToday = workKm;
+                int workToday = Math.Min(workUnits, remainingUnitsToday);
+                totalKm += workToday;
+                remainingUnitsToday -= workToday;
+                workUnits -= workToday;
+
+                if(workToday != 0)
+                    Console.WriteLine($"[Day {dayCounter}] {edge.Source.Name} -> {edge.Destination.Name}: {workToday} hours, {workToday} km");
+
+                if (remainingUnitsToday == 0 && workUnits > 0)
+                {
+                    dayCounter++;
+                    remainingUnitsToday = dailyUnits;
+                }
             }
 
-            totalKm += workKm;
-
-            Console.WriteLine($"[Day {dayCounter}] {edge.Nodes[0].Name} -> {edge.Nodes[1].Name}: {workHours} hours, {workKm} km");
-
-            if (hoursSpentToday == dailyHours)
-            {
-                hoursSpentToday = 0;
-                dayCounter++;
-            }
         }
 
+        Console.WriteLine(asdsad);
         Console.WriteLine($"result: {dayCounter} days, {totalKm} km");
     }
 }
