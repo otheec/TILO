@@ -55,3 +55,6 @@ This program evaluates nodes in a weighted, connected graph with edges requiring
 ### Problem Description
 - **Input:** A graph of evaluated nodes connected by weighted edges.
 - **Output:** For each step `t`, the program outputs the state `r`, `z`, along with the edge and node used
+
+### 5. **Minimum Spanning Tree Algorithms**
+Implementation and comparison of Kruskal's, Jarnik's (Prim's), and Borůvka's algorithms to find the MST of a graph.
