@@ -52,8 +52,10 @@ internal class GraphSolver
                 workHours -= workHoursToday;
                 workKm -= workKmToday;
 
-                if(workHoursToday != 0)
-                    Console.WriteLine($"[Day {dayCounter}] {edge.Source.Name} -> {edge.Destination.Name}: {workHoursToday} hours, {workKmToday} km");
+                char? plusHourIndicator = workHoursToday == workKmToday ? null : '*';
+
+                if (workHoursToday != 0)
+                    Console.WriteLine($"[Day {dayCounter}] {edge.Source.Name} -> {edge.Destination.Name}: {workHoursToday} hours, {workKmToday} km {plusHourIndicator}");
 
                 if (remainingHoursToday == 0 && workHours > 0)
                 {
