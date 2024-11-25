@@ -1,4 +1,5 @@
 ﻿using Airport.Algorithms;
+using System.Globalization;
 
 namespace Airport.Services;
 internal class SolutionProvider
@@ -10,7 +11,7 @@ internal class SolutionProvider
         var random = new Random();
         Func<string, string, double> heuristic = (startCode, endCode) =>
         {
-            return random.NextDouble() * 1000; // Random heuristic
+            return random.NextDouble();
         };
 
         List<(string Start, string End)> routes = new()
@@ -62,7 +63,9 @@ internal class SolutionProvider
                 double distance = connection.Distance.Value;
                 totalDistance += distance;
 
-                result += $" -> {to.Code}({totalDistance:0.0},{distance:0.0})";
+                result += $" -> " +
+                    $"{to.Code}({totalDistance.ToString("0.0", CultureInfo.InvariantCulture)}," +
+                    $"{distance.ToString("0.0", CultureInfo.InvariantCulture)})";
             }
         }
 
