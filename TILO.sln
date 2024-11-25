@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceGraphTraversal", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkeletonOfTheChart", "src\SkeletonOfTheChart\SkeletonOfTheChart.csproj", "{F227679D-7777-4694-876D-F2C22EBE8AA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airport", "src\Airport\Airport.csproj", "{CE3BCC71-885C-47E1-901F-40E5C2A20C17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F227679D-7777-4694-876D-F2C22EBE8AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F227679D-7777-4694-876D-F2C22EBE8AA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F227679D-7777-4694-876D-F2C22EBE8AA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE3BCC71-885C-47E1-901F-40E5C2A20C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE3BCC71-885C-47E1-901F-40E5C2A20C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE3BCC71-885C-47E1-901F-40E5C2A20C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE3BCC71-885C-47E1-901F-40E5C2A20C17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
