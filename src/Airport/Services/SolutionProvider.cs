@@ -14,11 +14,11 @@ internal class SolutionProvider
 
         Func<string, string, double> heuristic = (startCode, endCode) =>
         {
-            if (!airportCoordinates.ContainsKey(startCode) || !airportCoordinates.ContainsKey(endCode))
+            if (!airportCoordinates.ContainsKey(startCode) || !airportCoordinates.TryGetValue(endCode, out (double Lat, double Lon) value))
                 throw new Exception("Invalid airport code");
 
             var (lat1, lon1) = airportCoordinates[startCode];
-            var (lat2, lon2) = airportCoordinates[endCode];
+            var (lat2, lon2) = value;
 
             double R = 6371; // Radius of Earth in km
             double dLat = (lat2 - lat1) * Math.PI / 180;

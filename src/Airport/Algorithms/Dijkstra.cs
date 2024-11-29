@@ -8,7 +8,6 @@ public class Dijkstra
         var priorityQueue = new SortedSet<(double, string)>();
         var visited = new HashSet<string>();
 
-        // Initialize distances and previous
         foreach (var airport in airports)
         {
             distances[airport.Code] = double.MaxValue;
