@@ -9,9 +9,25 @@ internal class SolutionProvider
         var airports = AirportProvider.GetAirports();
 
         var random = new Random();
+
+        var airportCoordinates = CoordinatesProvider.GetAirportCoordinates();
+
         Func<string, string, double> heuristic = (startCode, endCode) =>
         {
-            return random.NextDouble();
+            if (!airportCoordinates.ContainsKey(startCode) || !airportCoordinates.ContainsKey(endCode))
+                throw new Exception("Invalid airport code");
+
+            var (lat1, lon1) = airportCoordinates[startCode];
+            var (lat2, lon2) = airportCoordinates[endCode];
+
+            double R = 6371; // Radius of Earth in km
+            double dLat = (lat2 - lat1) * Math.PI / 180;
+            double dLon = (lon2 - lon1) * Math.PI / 180;
+            double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                       Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
+                       Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            return R * c;
         };
 
         List<(string Start, string End)> routes = new()

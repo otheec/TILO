@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Res\airport_feed.json" />
+    <None Remove="Resources\airport_feed.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Res\airport_feed.json">
+    <Content Include="Resources\airport_feed.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

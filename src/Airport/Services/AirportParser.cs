@@ -3,7 +3,7 @@
 namespace Airport.Services;
 public static class AirportParser
 {
-    public static List<Model.Airport> ParseAirports(string json)
+    public static List<Model.Airport>? ParseAirports(string json)
     {
         return JsonConvert.DeserializeObject<List<Model.Airport>>(json);
     }
