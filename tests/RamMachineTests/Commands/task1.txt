@@ -1,0 +1,15 @@
+﻿initialize:
+LOAD =1
+STORE 1
+
+read:
+READ 0
+JZERO output
+MULT 1
+STORE 1
+JUMP read
+
+output:
+LOAD 1
+WRITE 0
+HALT

@@ -1,0 +1,62 @@
+initialize:
+LOAD =0
+STORE 1         ; Initialize count of 1s to 0
+LOAD =0
+STORE 2         ; Initialize count of 2s to 0
+LOAD =0
+STORE 3         ; Initialize count of 3s to 0
+
+read:
+READ 0
+JZERO compare   ; If input is 0, go to comparison step
+SUB =1
+JZERO count_one ; If input is 1, increment count of 1s
+SUB =1
+JZERO count_two ; If input is 2, increment count of 2s
+SUB =1
+JZERO count_three ; If input is 3, increment count of 3s
+JUMP read       ; Otherwise, read next input
+
+count_one:
+LOAD 1
+ADD =1
+STORE 1         ; Increment count of 1s
+JUMP read
+
+count_two:
+LOAD 2
+ADD =1
+STORE 2         ; Increment count of 2s
+JUMP read
+
+count_three:
+LOAD 3
+ADD =1
+STORE 3         ; Increment count of 3s
+JUMP read
+
+compare:
+LOAD 1
+SUB 2           ; Subtract count of 2s from count of 1s
+JZERO check_1_and_2_equal
+JUMP not_equal
+
+check_1_and_2_equal:
+LOAD 2
+SUB 3           ; Subtract count of 3s from count of 2s
+JZERO check_3_equal
+JUMP not_equal
+
+check_3_equal:
+LOAD 3
+SUB 1           ; Subtract count of 1s from count of 3s
+JZERO equal
+JUMP not_equal
+
+equal:
+WRITE =1        ; Output 1 if all counts are equal
+HALT
+
+not_equal:
+WRITE =0        ; Output 0 if counts are not equal
+HALT

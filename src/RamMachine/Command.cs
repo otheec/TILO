@@ -1,5 +1,5 @@
 ﻿namespace RamMachine;
-internal class Command : ICommand
+public class Command : ICommand
 {
     public CommandType Type { get; set; }
     public int Operand { get; set; }
@@ -17,15 +17,6 @@ internal class Command : ICommand
     public void Parse(string line)
     {
         string[] data = line.Replace("\r", "").Split();
-
-        if (data.Length > 1)
-        {
-            Console.WriteLine(data[0] + " " + data[1]);
-        }
-        else
-        {
-            Console.WriteLine(data[0]);
-        }
 
         Type = (CommandType)Enum.Parse(typeof(CommandType), data[0]);
         if (data.Length > 1)

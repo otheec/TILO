@@ -1,5 +1,5 @@
 ﻿namespace RamMachine;
-internal class JumpCommand : ICommand
+public class JumpCommand : ICommand
 {
     public CommandType Type { get; set; }
     public string Label { get; set; }

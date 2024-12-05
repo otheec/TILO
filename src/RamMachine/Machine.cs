@@ -1,5 +1,5 @@
 ﻿namespace RamMachine;
-class Machine
+public class Machine
 {
     public List<int> InputString { get; set; } = new List<int>();
     public List<int> OutputString { get; set; } = new List<int>();

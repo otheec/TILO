@@ -1,5 +1,5 @@
 ﻿namespace RamMachine;
-enum OperandType
+public enum OperandType
 {
     Number,
     Register,

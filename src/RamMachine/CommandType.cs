@@ -1,5 +1,5 @@
 ﻿namespace RamMachine;
-internal enum CommandType
+public enum CommandType
 {
     READ,
     WRITE,
