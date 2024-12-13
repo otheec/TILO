@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airport", "src\Airport\Airp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RamMachine", "src\RamMachine\RamMachine.csproj", "{6ED12B95-7B29-4A8E-9470-7FF01E61A69A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RamMachineTests", "tests\RamMachineTests\RamMachineTests.csproj", "{49299B7F-0796-4501-8A5D-033CF169B9DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RamMachineTests", "tests\RamMachineTests\RamMachineTests.csproj", "{49299B7F-0796-4501-8A5D-033CF169B9DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingStairs", "src\ClimbingStairs\ClimbingStairs.csproj", "{E6C08DF5-B356-4DE2-9A6F-9239517BA76E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{49299B7F-0796-4501-8A5D-033CF169B9DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49299B7F-0796-4501-8A5D-033CF169B9DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49299B7F-0796-4501-8A5D-033CF169B9DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6C08DF5-B356-4DE2-9A6F-9239517BA76E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6C08DF5-B356-4DE2-9A6F-9239517BA76E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6C08DF5-B356-4DE2-9A6F-9239517BA76E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6C08DF5-B356-4DE2-9A6F-9239517BA76E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
